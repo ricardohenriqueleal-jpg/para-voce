@@ -6,44 +6,54 @@
   <title>Pra você, meu lugar favorito</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="background-glow"></div>
   <div class="stars"></div>
-  <div class="hearts" aria-hidden="true"></div>
+  <div id="hearts"></div>
 
   <main class="page">
-    <section class="hero card fade-in">
-      <p class="eyebrow">uma pequena carta para você</p>
-      <h1>Pra você, meu lugar favorito</h1>
-      <p class="subtitle">Daqui até a lua, ida e volta. 🌙</p>
-      <button class="enter" onclick="document.getElementById('carta').scrollIntoView({behavior:'smooth'})">Abrir meu coração</button>
+    <section class="hero">
+      <div class="moon">☾</div>
+      <p class="eyebrow">uma pequena lembrança para você</p>
+      <h1>Pra você,<br><span>meu lugar favorito</span></h1>
+      <p class="subtitle">Porque qualquer lugar é o meu lugar, desde que seja o seu lugar.</p>
+      <button class="start-btn" id="startBtn">Abrir essa lembrança ♥</button>
     </section>
 
-    <section class="gallery card fade-in">
-      <div class="photo-frame">
+    <section class="content hidden" id="content">
+      <div class="photo-card">
+        <button class="nav prev" id="prevBtn" aria-label="Foto anterior">‹</button>
         <img id="slide" src="fotos/foto1.jpg" alt="Nossa foto" />
+        <button class="nav next" id="nextBtn" aria-label="Próxima foto">›</button>
+        <div class="counter" id="counter">1 / 7</div>
       </div>
+
       <div class="dots" id="dots"></div>
-    </section>
 
-    <section id="carta" class="letter card fade-in">
-      <h2>Meu amor,</h2>
-      <div id="typewriter" class="typewriter"></div>
-    </section>
+      <article class="letter">
+        <p id="typedText"></p>
+      </article>
 
-    <section class="music card fade-in">
-      <p class="music-label">🎵 Nossa música</p>
-      <h2>Metade de Mim</h2>
-      <p>Rosa de Saron</p>
-      <a class="spotify" href="https://open.spotify.com/intl-pt/track/1tPuHU5i192zGtNUk6fhXQ?si=ee7988541ced46b1" target="_blank" rel="noopener noreferrer">▶ Ouvir no Spotify</a>
-    </section>
+      <section class="music-box">
+        <div>
+          <p class="music-label">nossa trilha sonora</p>
+          <h2>Metade de Mim</h2>
+          <p>Rosa de Saron</p>
+        </div>
+        <div class="music-actions">
+          <a class="spotify-btn" href="https://open.spotify.com/intl-pt/track/1tPuHU5i192zGtNUk6fhXQ?si=ee7988541ced46b1" target="_blank" rel="noopener">▶ Ouvir no Spotify</a>
+        </div>
+        <p class="hint">Toque no botão para abrir a música no Spotify e deixar esta lembrança ainda mais especial.</p>
+      </section>
 
-    <section class="closing card fade-in">
-      <h2>Você é meu lugar. Sempre.</h2>
-      <p>Qualquer lugar é meu lugar, desde que seja o seu lugar.</p>
-      <span>❤️🌙</span>
+      <section class="finale">
+        <p>Te amo daqui até a lua, ida e volta.</p>
+        <h2>E, se for preciso, mil vezes mais.</h2>
+        <span>❤️ 🌙</span>
+      </section>
     </section>
   </main>
 
