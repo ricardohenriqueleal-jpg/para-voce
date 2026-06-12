@@ -1,6 +1,23 @@
 const photos = [
   'fotos/foto1.jpg','fotos/foto2.jpg','fotos/foto3.jpg','fotos/foto4.jpg','fotos/foto5.jpg','fotos/foto6.jpg','fotos/foto7.jpg'
 ];
+let current = 0;
+const slide = document.getElementById('slide');
+const dotsBox = document.getElementById('dots');
+photos.forEach((_, i) => {
+  const dot = document.createElement('span');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => showPhoto(i);
+  dotsBox.appendChild(dot);
+});
+function showPhoto(i){
+  current = i;
+  slide.style.opacity = 0;
+  setTimeout(()=>{ slide.src = photos[current]; slide.style.opacity = 1; updateDots(); }, 250);
+}
+function updateDots(){ [...document.querySelectorAll('.dot')].forEach((d,i)=>d.classList.toggle('active', i===current)); }
+setInterval(()=> showPhoto((current + 1) % photos.length), 5200);
+slide.style.transition = 'opacity .35s ease';
 
 const message = `Sei que essa nova fase não tem sido fácil. Talvez existam dias em que tudo pareça pesado, dias em que as incertezas e o cansaço tentem falar mais alto. Mas, olhando para tudo o que já vivemos, tenho a certeza de que também vamos superar esse momento.
 
@@ -11,60 +28,28 @@ Se existe algo de que nunca duvidei, foi do amor que sinto por você. E é por i
 Te amo daqui até a lua, ida e volta.
 
 E, se for preciso, mil vezes mais.`;
-
-let index = 0;
-let typingStarted = false;
-const slide = document.getElementById('slide');
-const counter = document.getElementById('counter');
-const dots = document.getElementById('dots');
-const content = document.getElementById('content');
-
-photos.forEach((_, i) => {
-  const dot = document.createElement('button');
-  dot.className = 'dot' + (i === 0 ? ' active' : '');
-  dot.setAttribute('aria-label', `Ir para foto ${i + 1}`);
-  dot.addEventListener('click', () => showPhoto(i));
-  dots.appendChild(dot);
-});
-
-function showPhoto(i){
-  index = (i + photos.length) % photos.length;
-  slide.style.opacity = 0;
-  setTimeout(() => {
-    slide.src = photos[index];
-    counter.textContent = `${index + 1} / ${photos.length}`;
-    document.querySelectorAll('.dot').forEach((d, n) => d.classList.toggle('active', n === index));
-    slide.style.opacity = 1;
-  }, 220);
+const typeBox = document.getElementById('typewriter');
+let typed = false;
+function typeWriter(){
+  if (typed) return; typed = true;
+  let i = 0;
+  const cursor = '<span class="cursor">&nbsp;</span>';
+  const timer = setInterval(()=>{
+    typeBox.innerHTML = message.slice(0, i).replace(/\n/g,'<br>') + cursor;
+    i++;
+    if(i > message.length){ clearInterval(timer); typeBox.innerHTML = message.replace(/\n/g,'<br>'); }
+  }, 34);
 }
-
-document.getElementById('prevBtn').addEventListener('click', () => showPhoto(index - 1));
-document.getElementById('nextBtn').addEventListener('click', () => showPhoto(index + 1));
-setInterval(() => showPhoto(index + 1), 5200);
-
-document.getElementById('startBtn').addEventListener('click', () => {
-  content.classList.remove('hidden');
-  content.scrollIntoView({behavior:'smooth'});
-  if(!typingStarted){ typingStarted = true; typeMessage(); }
-});
-
-function typeMessage(){
-  const el = document.getElementById('typedText');
-  let pos = 0;
-  const timer = setInterval(() => {
-    el.textContent = message.slice(0, pos++);
-    if(pos > message.length) clearInterval(timer);
-  }, 25);
-}
+const observer = new IntersectionObserver((entries)=> entries.forEach(e=>{ if(e.isIntersecting) typeWriter(); }), {threshold:.2});
+observer.observe(document.getElementById('carta'));
 
 function createHeart(){
-  const heart = document.createElement('div');
-  heart.className = 'heart';
-  heart.textContent = Math.random() > .35 ? '♥' : '❤';
-  heart.style.left = Math.random() * 100 + 'vw';
-  heart.style.animationDuration = (7 + Math.random() * 8) + 's';
-  heart.style.fontSize = (12 + Math.random() * 22) + 'px';
-  document.getElementById('hearts').appendChild(heart);
-  setTimeout(() => heart.remove(), 15000);
+  const h = document.createElement('div');
+  h.className = 'heart'; h.textContent = Math.random() > .5 ? '❤️' : '♡';
+  h.style.left = Math.random()*100 + 'vw';
+  h.style.animationDuration = 7 + Math.random()*7 + 's';
+  h.style.fontSize = 14 + Math.random()*22 + 'px';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(), 14000);
 }
-setInterval(createHeart, 550);
+setInterval(createHeart, 900);
